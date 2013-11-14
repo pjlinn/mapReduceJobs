@@ -46,6 +46,10 @@
 	"/home/pjlinn/Documents/dataMiningPrograms/hadoop-2.2.0/share/hadoop/map\
 	reduce/*:/home/pjlinn/Documents/dataMiningPrograms/hadoop-2.2.0/share/had\
 	oop/common/*" WordCount.java
+
+	[pjlinn@peterRoomDesktop hadoop-2.2.0]$ ./bin/hadoop jar ~/Documents/git\
+	Hub/mapReduceJobs/wordcountv1.0/wordcount.jar WordCount /testing/input/ \
+	/testing/output
 */
 
 import java.io.IOException;

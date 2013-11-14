@@ -21,6 +21,8 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+import org.apache.hadoop.mapred.*;
+
 public class CountInstances {
 
 	public static class Map 
@@ -60,12 +62,29 @@ public class CountInstances {
 	}
 
 	public static void main(String[] args) 
-	throws IOException, InterruptedException {
+	throws Exception {
 		
 		if (args.length != 2) {
 			System.out.println("Usage: CountInstances <input path> <output path>");
 			System.exit(-1);
 		}
+
+		// JobConf conf = new JobConf(CountInstances.class);
+		// conf.setJobName("CountInstances");
+
+		// conf.setOutputKeyClass(Text.class);
+		// conf.setOutputValueClass(IntWritable.class);
+
+		// conf.setMapperClass(Mapper.class);
+		// conf.setReducerClass(Reducer.class);
+
+		// conf.setInputFormat(TextInputFormat.class);
+		// conf.setOutputFormat(TextOutputFormat.class);
+
+		// FileInputFormat.setInputPaths(conf, new Path(args[0]));
+		// FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+
+		// JobClient.runJob(conf);
 
 		Job job = new Job();
 		job.setJarByClass(CountInstances.class);
@@ -80,6 +99,6 @@ public class CountInstances {
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
 
-		// System.exit(job.waitForCompletion(true) ? 0 : 1);
+		System.exit(job.waitForCompletion(true) ? 0 : 1);
 	}
 }
