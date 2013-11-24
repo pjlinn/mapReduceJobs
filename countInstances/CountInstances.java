@@ -75,36 +75,19 @@ public class CountInstances {
 			System.exit(-1);
 		}
 
-		JobConf conf = new JobConf(CountInstances.class);
-		conf.setJobName("CountInstances");
+		Job job = new Job();
+		job.setJarByClass(CountInstances.class);
+		job.setJobName("Count Instances");
 
-		conf.setOutputKeyClass(Text.class);
-		conf.setOutputValueClass(IntWritable.class);
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-		conf.setMapperClass(Mapper.class);
-		conf.setReducerClass(Reducer.class);
+		job.setMapperClass(Map.class);
+		job.setReducerClass(Reduce.class);
 
-		conf.setInputFormat(TextInputFormat.class);
-		conf.setOutputFormat(TextOutputFormat.class);
+		job.setOutputKeyClass(Text.class);
+		job.setOutputValueClass(IntWritable.class);
 
-		FileInputFormat.setInputPaths(conf, new Path(args[0]));
-		FileOutputFormat.setOutputPath(conf, new Path(args[1]));
-
-		JobClient.runJob(conf);
-
-		// Job job = new Job();
-		// job.setJarByClass(CountInstances.class);
-		// job.setJobName("Count Instances");
-
-		// FileInputFormat.addInputPath(job, new Path(args[0]));
-		// FileOutputFormat.setOutputPath(job, new Path(args[1]));
-
-		// job.setMapperClass(Map.class);
-		// job.setReducerClass(Reduce.class);
-
-		// job.setOutputKeyClass(Text.class);
-		// job.setOutputValueClass(IntWritable.class);
-
-		// System.exit(job.waitForCompletion(true) ? 0 : 1);
+		System.exit(job.waitForCompletion(true) ? 0 : 1);
 	}
 }
