@@ -5,6 +5,12 @@
 	newest or not.
 
 	Currently doesn't work
+
+	Hadoop 2.2
+	[pjlinn@peterRoomDesktop wordcountv1.0]$ javac -cp \
+	"/home/pjlinn/Documents/dataMiningPrograms/hadoop-2.2.0/share/hadoop/map\
+	reduce/*:/home/pjlinn/Documents/dataMiningPrograms/hadoop-2.2.0/share/had\
+	oop/common/*" WordCount.java
 */
 
 import java.io.IOException;
@@ -69,36 +75,36 @@ public class CountInstances {
 			System.exit(-1);
 		}
 
-		// JobConf conf = new JobConf(CountInstances.class);
-		// conf.setJobName("CountInstances");
+		JobConf conf = new JobConf(CountInstances.class);
+		conf.setJobName("CountInstances");
 
-		// conf.setOutputKeyClass(Text.class);
-		// conf.setOutputValueClass(IntWritable.class);
+		conf.setOutputKeyClass(Text.class);
+		conf.setOutputValueClass(IntWritable.class);
 
-		// conf.setMapperClass(Mapper.class);
-		// conf.setReducerClass(Reducer.class);
+		conf.setMapperClass(Mapper.class);
+		conf.setReducerClass(Reducer.class);
 
-		// conf.setInputFormat(TextInputFormat.class);
-		// conf.setOutputFormat(TextOutputFormat.class);
+		conf.setInputFormat(TextInputFormat.class);
+		conf.setOutputFormat(TextOutputFormat.class);
 
-		// FileInputFormat.setInputPaths(conf, new Path(args[0]));
-		// FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+		FileInputFormat.setInputPaths(conf, new Path(args[0]));
+		FileOutputFormat.setOutputPath(conf, new Path(args[1]));
 
-		// JobClient.runJob(conf);
+		JobClient.runJob(conf);
 
-		Job job = new Job();
-		job.setJarByClass(CountInstances.class);
-		job.setJobName("Count Instances");
+		// Job job = new Job();
+		// job.setJarByClass(CountInstances.class);
+		// job.setJobName("Count Instances");
 
-		FileInputFormat.addInputPath(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		// FileInputFormat.addInputPath(job, new Path(args[0]));
+		// FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-		job.setMapperClass(Map.class);
-		job.setReducerClass(Reduce.class);
+		// job.setMapperClass(Map.class);
+		// job.setReducerClass(Reduce.class);
 
-		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
+		// job.setOutputKeyClass(Text.class);
+		// job.setOutputValueClass(IntWritable.class);
 
-		System.exit(job.waitForCompletion(true) ? 0 : 1);
+		// System.exit(job.waitForCompletion(true) ? 0 : 1);
 	}
 }
