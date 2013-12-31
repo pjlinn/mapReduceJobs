@@ -5,9 +5,8 @@
 	Runs on MRv1 since it uses the new API and will not run on MRv2
 
 	MapReduce job to count the number of instances of each unique number
-	in a list of numbers. This is basically the same thing as a wordcount
-	except it uses the newer version of mapReduce not sure if it's the
-	newest or not.
+	in a list of numbers. This is basically the same thing as a 
+	wordcount.
 
 	Hadoop 2.2
 	[pjlinn@peterRoomDesktop wordcountv1.0]$ javac -cp \

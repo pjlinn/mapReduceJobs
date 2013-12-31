@@ -39,8 +39,6 @@
 	Hello 2 
 	World 2 	
 
-
-
 	Hadoop 2.2
 	[pjlinn@peterRoomDesktop wordcountv1.0]$ javac -cp \
 	"/home/pjlinn/Documents/dataMiningPrograms/hadoop-2.2.0/share/hadoop/map\

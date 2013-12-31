@@ -1,7 +1,7 @@
 /*
 	Finds the largest integer from a file of integers.
 
-	Runs on MRv1
+	Runs on MRv1 since it is the new API
 
 
 	-----
@@ -11,6 +11,13 @@
 
 	to jar:
 	jar -cvf MaxInt.jar -C maxInt/ .
+
+	to run:
+	bin/hadoop jar ~/Documents/gitHub/mapReduceJobs/maxInt/MaxInt.jar \
+	MaxInt /input/nums.txt /output/maxInt
+
+	--------
+	It actually returns each unique digit, not the max, so it doesn't work
 
 */
 
