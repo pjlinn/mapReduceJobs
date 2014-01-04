@@ -18,6 +18,14 @@
 
 	--------
 	It actually returns each unique digit, not the max, so it doesn't work
+	- It was because I was using the (key, value) pair, this is what I originally
+	had:
+		=> context.write(num, one); 
+	changed it to:
+		=> context.write(one, num);
+	- the first way would create a map task for every individual number, where I 
+	really just want 1 map task for all the numbers.
+	- Had to change a lot of stuff with that though like the key ins and key outs
 
 */
 
@@ -40,10 +48,10 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class MaxInt {
 	// Class Mapper<KEYIN,VALUEIN,KEYOUT,VALUEOUT>
 	public static class Map 
-	extends Mapper<LongWritable, Text, Text, IntWritable> {
+	extends Mapper<LongWritable, Text, IntWritable, LongWritable> {
 
 		private final static IntWritable one = new IntWritable(1);
-		private Text num = new Text();
+		private LongWritable num = new LongWritable();
 
 		@Override
 		public void map(LongWritable key, Text value, Context context) 
@@ -53,22 +61,22 @@ public class MaxInt {
 
 			StringTokenizer tokenizer = new StringTokenizer(line);
 
-			num.set(tokenizer.nextToken());
+			num.set(Long.parseLong(tokenizer.nextToken()));
 
-			context.write(num, one);
+			context.write(one, num);
 		}
 	}
 
 	public static class Reduce
-	extends Reducer<Text, IntWritable, Text, IntWritable> {
+	extends Reducer<IntWritable, LongWritable, IntWritable, LongWritable> {
 
 		@Override
-		public void reduce(Text key, Iterable<IntWritable> values, Context context)
+		public void reduce(IntWritable key, Iterable<LongWritable> values, Context context)
 		throws IOException, InterruptedException {
 
-			IntWritable max = new IntWritable(0);
+			LongWritable max = new LongWritable(0);
 
-			for (IntWritable value : values ) {
+			for (LongWritable value : values ) {
 				max = (value.get() > max.get()) ? value : max;
 			}
 			context.write(key, max);
@@ -88,8 +96,8 @@ public class MaxInt {
 		job.setMapperClass(Map.class);
 		job.setReducerClass(Reduce.class);
 
-		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
+		job.setOutputKeyClass(IntWritable.class);
+		job.setOutputValueClass(LongWritable.class);
 
 		System.exit(job.waitForCompletion(true) ? 0  : 1);
 	}
