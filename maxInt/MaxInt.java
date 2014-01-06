@@ -70,14 +70,17 @@ public class MaxInt {
 	public static class Reduce
 	extends Reducer<IntWritable, LongWritable, IntWritable, LongWritable> {
 
+		LongWritable max = new LongWritable(0);
+
 		@Override
 		public void reduce(IntWritable key, Iterable<LongWritable> values, Context context)
 		throws IOException, InterruptedException {
 
-			LongWritable max = new LongWritable(0);
-
 			for (LongWritable value : values ) {
-				max = (value.get() > max.get()) ? value : max;
+				// max = (value.get() > max.get()) ? value : max; -> Doesn't work
+				if (value.get() > max.get()) {
+					max.set(value.get());
+				}
 			}
 			context.write(key, max);
 
@@ -94,6 +97,7 @@ public class MaxInt {
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
 		job.setMapperClass(Map.class);
+		job.setCombinerClass(Reduce.class);
 		job.setReducerClass(Reduce.class);
 
 		job.setOutputKeyClass(IntWritable.class);
